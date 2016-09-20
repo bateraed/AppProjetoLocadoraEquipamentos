@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Locação de Equipamentos</string>
+    <string name="salvar">Salvar</string>
+    <string name="voltar">Voltar</string>
+    <string name="concluir">Concluir</string>
+    <string name="nome_obrigatorio">O mome é obrigatório!</string>
+    <string name="sexo_obrigatorio">O sexo é obrigatório!</string>
+    <string name="data_nascimento_obrigatorio">A data de nascimento é obrigatório!</string>
+    <string name="regsistro_salvo_sucesso">Registro salvo com sucesso!</string>
+    <string name="endereco_obrigatorio">O endereco é obrigatório!</string>
+
+</resources>
