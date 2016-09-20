@@ -19,7 +19,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import ed.com.br.appprojetolocadoraequipamentos.DAO.ReservaDAO;
+import ed.com.br.appprojetolocadoraequipamentos.Model.Equipamento;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Professor;
+import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
+import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 
 /**
  * Created by edinilson.silva on 14/09/2016.
@@ -43,6 +47,7 @@ public class LocacaoActivity extends Activity {
         localizcao();
         carregaSalas();
         listarProfessor();
+        listarEquipamentos();
     }
 
     private void criarComponetes() {
@@ -127,7 +132,7 @@ public class LocacaoActivity extends Activity {
         concluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                eventoSalvar();
             }
         });
     }
@@ -162,6 +167,21 @@ public class LocacaoActivity extends Activity {
         spinnerSala.setAdapter(arrayAdapter);
     }
 
+    private void listarEquipamentos() {
+
+        Equipamento e1 = new Equipamento(1, "DataShow", 5);
+        Equipamento e2 = new Equipamento(2, "Lousa", 2);
+
+        List<String> equipamentos = new ArrayList<>();
+        equipamentos.add(e1.getNome());
+        equipamentos.add(e2.getNome());
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, equipamentos);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerEquipamento.setAdapter(arrayAdapter);
+    }
+
     private void listarProfessor() {
 
         Professor p1 = new Professor(1, "Edi", "ba@gmail.com", "Analaise", "ADS");
@@ -175,5 +195,36 @@ public class LocacaoActivity extends Activity {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerProfessor.setAdapter(arrayAdapter);
+    }
+
+    private void eventoSalvar(){
+
+        Reserva reserva = new Reserva();
+        reserva.setNomeProfessor(spinnerProfessor.getSelectedItem().toString());
+        reserva.setEquipamento(spinnerEquipamento.getSelectedItem().toString());
+        reserva.setSala(spinnerSala.getSelectedItem().toString());
+        if(editTextData.getText().toString().trim().equals("")){
+            Util.alert(this, "Data obrigatória!");
+            editTextData.requestFocus();
+        } else if (editTextHoraFinal.getText().toString().trim().equals("")){
+            Util.alert(this, "Horário obrigatório!");
+            editTextHoraFinal.requestFocus();
+        } else if (editTextHoraInicio.getText().toString().trim().equals("")){
+            Util.alert(this, "Horário Obrigatório!");
+            editTextHoraInicio.requestFocus();
+        }
+        reserva.setData(editTextData.getText().toString().trim());
+        reserva.setHorarioInicial(editTextHoraInicio.getText().toString().trim());
+        reserva.setHorarioFinal(editTextHoraFinal.getText().toString().trim());
+
+        new ReservaDAO(this).salvar(reserva);
+        Util.alert(this, this.getString(R.string.regsistro_salvo_sucesso) );
+        limparCampos();
+    }
+
+    private void limparCampos(){
+        editTextData.setText(null);
+        editTextHoraFinal.setText(null);
+        editTextHoraInicio.setText(null);
     }
 }

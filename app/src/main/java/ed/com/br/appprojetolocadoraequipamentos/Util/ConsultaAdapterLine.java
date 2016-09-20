@@ -64,8 +64,8 @@ public class ConsultaAdapterLine extends BaseAdapter {
         TextView textViewSala = (TextView)viewLinhaLista.findViewById(R.id.textViewSala);
         TextView textViewEquipamento = (TextView)viewLinhaLista.findViewById(R.id.textViewEquipamento);
         TextView textViewData = (TextView)viewLinhaLista.findViewById(R.id.textViewData);
-        TextView textViewHorarioInicial = (TextView)viewLinhaLista.findViewById(R.id.textViewHorarioInicial);
-        TextView textViewHorarioFinal = (TextView)viewLinhaLista.findViewById(R.id.textViewHorarioFinal);
+        TextView textViewHorarioInicial = (TextView)viewLinhaLista.findViewById(R.id.textViewInicial);
+        TextView textViewHorarioFinal = (TextView)viewLinhaLista.findViewById(R.id.textViewFinal);
 
         Button buttonExcluir = (Button)viewLinhaLista.findViewById(R.id.buttonExcluir);
         Button buttonEditar = (Button)viewLinhaLista.findViewById(R.id.buttonEditar);
@@ -74,6 +74,7 @@ public class ConsultaAdapterLine extends BaseAdapter {
         textViewIdReserva.setText(String.valueOf(reservas.get(position).getIdLocacao()));
         textViewNomeProfessor.setText(String.valueOf(reservas.get(position).getNomeProfessor()));
         textViewEquipamento.setText(String.valueOf(reservas.get(position).getEquipamento()));
+        textViewSala.setText(String.valueOf(reservas.get(position).getSala()));
         textViewData.setText(reservas.get(position).getData());
         textViewHorarioFinal.setText(reservas.get(position).getHorarioFinal());
         textViewHorarioInicial.setText(reservas.get(position).getHorarioInicial());
