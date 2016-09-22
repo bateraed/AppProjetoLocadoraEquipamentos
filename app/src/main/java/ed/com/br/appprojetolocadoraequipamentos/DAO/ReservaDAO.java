@@ -33,7 +33,7 @@ public class ReservaDAO {
         contentValues.put("horarioInicial", reserva.getHorarioInicial());
         contentValues.put("horarioFinal", reserva.getHorarioFinal());
 
-        databaseUtil.getConexaoDataBase().insert("tb_reserva", null, contentValues);
+        databaseUtil.getConexaoDataBase().insert("tb_reserva",null, contentValues);
     }
 
     //ATUALIZAR RESERVA
