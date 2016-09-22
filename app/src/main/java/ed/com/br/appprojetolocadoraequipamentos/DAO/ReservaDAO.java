@@ -54,7 +54,7 @@ public class ReservaDAO {
     //EXCLUI RESERVA
     public Integer excluir(int codigo){
 
-        return databaseUtil.getConexaoDataBase().delete("tb_reserva", "id=reserva = ?",
+        return databaseUtil.getConexaoDataBase().delete("tb_reserva", "id_reserva = ?",
                 new String[]{Integer.toString(codigo)});
 
     }
