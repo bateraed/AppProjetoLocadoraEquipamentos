@@ -47,7 +47,7 @@ public class ReservaDAO {
         contentValues.put("horarioInicial", reserva.getHorarioInicial());
         contentValues.put("horarioFinal", reserva.getHorarioFinal());
 
-        databaseUtil.getConexaoDataBase().update("tb_reserva", contentValues, "id=reserva = ?",
+        databaseUtil.getConexaoDataBase().update("tb_reserva", contentValues, "id_reserva = ?",
                 new String[]{Integer.toString(reserva.getIdLocacao())});
     }
 
