@@ -26,12 +26,12 @@ public class ReservaDAO {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("nomeProfessor", reserva.getNomeProfessor());
-        contentValues.put("equipamento", reserva.getEquipamento());
-        contentValues.put("sala", reserva.getSala());
-        contentValues.put("data",  reserva.getData());
-        contentValues.put("horarioInicial", reserva.getHorarioInicial());
-        contentValues.put("horarioFinal", reserva.getHorarioFinal());
+        contentValues.put("nome_prof_reserva", reserva.getNomeProfessor());
+        contentValues.put("nome_equip_reserva", reserva.getEquipamento());
+        contentValues.put("sala_reserva", reserva.getSala());
+        contentValues.put("data_reserva",  reserva.getData());
+        contentValues.put("hora_inicial_reserva", reserva.getHorarioInicial());
+        contentValues.put("hora_final_reserva", reserva.getHorarioFinal());
 
         databaseUtil.getConexaoDataBase().insert("tb_reserva",null, contentValues);
     }
@@ -40,21 +40,21 @@ public class ReservaDAO {
     public void atualizar(Reserva reserva){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("nomeProfessor", reserva.getNomeProfessor());
-        contentValues.put("equipamento", reserva.getEquipamento());
-        contentValues.put("sala", reserva.getSala());
-        contentValues.put("data",  reserva.getData());
-        contentValues.put("horarioInicial", reserva.getHorarioInicial());
-        contentValues.put("horarioFinal", reserva.getHorarioFinal());
+        contentValues.put("nome_prof_reserva", reserva.getNomeProfessor());
+        contentValues.put("nome_equip_reserva", reserva.getEquipamento());
+        contentValues.put("sala_reserva", reserva.getSala());
+        contentValues.put("data_reserva",  reserva.getData());
+        contentValues.put("hora_inicial_reserva", reserva.getHorarioInicial());
+        contentValues.put("hora_final_reserva", reserva.getHorarioFinal());
 
-        databaseUtil.getConexaoDataBase().update("tb_reserva", contentValues, "id_reserva = ?",
+        databaseUtil.getConexaoDataBase().update("tb_reserva", contentValues, "id = ?",
                 new String[]{Integer.toString(reserva.getIdLocacao())});
     }
 
     //EXCLUI RESERVA
     public Integer excluir(int codigo){
 
-        return databaseUtil.getConexaoDataBase().delete("tb_reserva", "id_reserva = ?",
+        return databaseUtil.getConexaoDataBase().delete("tb_reserva", "id = ?",
                 new String[]{Integer.toString(codigo)});
 
     }
@@ -63,18 +63,18 @@ public class ReservaDAO {
     public Reserva getReserva(int codigo){
 
         Cursor cursor = databaseUtil.getConexaoDataBase().
-                rawQuery("SELECT * FROM tb_reserva WHERE id_reserva= " + codigo, null);
+                rawQuery("SELECT * FROM tb_reserva WHERE id = " + codigo, null);
         cursor.moveToFirst();
 
         Reserva reserva = new Reserva();
 
-        reserva.setIdLocacao(cursor.getInt(cursor.getColumnIndex("id_reserva")));
-        reserva.setNomeProfessor(cursor.getString(cursor.getColumnIndex("nomeProfessor")));
-        reserva.setEquipamento(cursor.getString(cursor.getColumnIndex("equipamento")));
-        reserva.setData(cursor.getString(cursor.getColumnIndex("data")));
-        reserva.setSala(cursor.getString(cursor.getColumnIndex("sala")));
-        reserva.setHorarioInicial(cursor.getString(cursor.getColumnIndex("horarioInicial")));
-        reserva.setHorarioFinal(cursor.getString(cursor.getColumnIndex("horarioFinal")));
+        reserva.setIdLocacao(cursor.getInt(cursor.getColumnIndex("id")));
+        reserva.setNomeProfessor(cursor.getString(cursor.getColumnIndex("nome_prof_reserva")));
+        reserva.setEquipamento(cursor.getString(cursor.getColumnIndex("nome_equip_reserva")));
+        reserva.setData(cursor.getString(cursor.getColumnIndex("data_reserva")));
+        reserva.setSala(cursor.getString(cursor.getColumnIndex("sala_reserva")));
+        reserva.setHorarioInicial(cursor.getString(cursor.getColumnIndex("hora_inicial_reserva")));
+        reserva.setHorarioFinal(cursor.getString(cursor.getColumnIndex("hora_final_reserva")));
 
         return reserva;
     }
@@ -85,15 +85,15 @@ public class ReservaDAO {
 
         StringBuilder stringBuilderQuery = new StringBuilder();
 
-        stringBuilderQuery.append("SELECT id_reserva, ");
-        stringBuilderQuery.append("       nomeProfessor, ");
-        stringBuilderQuery.append("       equipamento, ");
-        stringBuilderQuery.append("       sala, ");
-        stringBuilderQuery.append("       data, ");
-        stringBuilderQuery.append("       horarioInicial, ");
-        stringBuilderQuery.append("       horarioFinal ");
+        stringBuilderQuery.append("SELECT id, ");
+        stringBuilderQuery.append("       nome_prof_reserva, ");
+        stringBuilderQuery.append("       nome_equip_reserva, ");
+        stringBuilderQuery.append("       sala_reserva, ");
+        stringBuilderQuery.append("       data_reserva, ");
+        stringBuilderQuery.append("       hora_inicial_reserva, ");
+        stringBuilderQuery.append("       hora_final_reserva ");
         stringBuilderQuery.append("FROM tb_reserva ");
-        stringBuilderQuery.append("ORDER BY data");
+        stringBuilderQuery.append("ORDER BY data_reserva");
 
         Cursor cursor = databaseUtil.getConexaoDataBase().rawQuery(stringBuilderQuery.toString(),null);
         cursor.moveToFirst();
@@ -103,13 +103,13 @@ public class ReservaDAO {
         while (!cursor.isAfterLast()){
             reserva = new Reserva();
 
-            reserva.setIdLocacao(cursor.getInt(cursor.getColumnIndex("id_reserva")));
-            reserva.setNomeProfessor(cursor.getString(cursor.getColumnIndex("nomeProfessor")));
-            reserva.setEquipamento(cursor.getString(cursor.getColumnIndex("equipamento")));
-            reserva.setData(cursor.getString(cursor.getColumnIndex("data")));
-            reserva.setSala(cursor.getString(cursor.getColumnIndex("sala")));
-            reserva.setHorarioInicial(cursor.getString(cursor.getColumnIndex("horarioInicial")));
-            reserva.setHorarioFinal(cursor.getString(cursor.getColumnIndex("horarioFinal")));
+            reserva.setIdLocacao(cursor.getInt(cursor.getColumnIndex("id")));
+            reserva.setNomeProfessor(cursor.getString(cursor.getColumnIndex("nome_prof_reserva")));
+            reserva.setEquipamento(cursor.getString(cursor.getColumnIndex("nome_equip_reserva")));
+            reserva.setData(cursor.getString(cursor.getColumnIndex("data_reserva")));
+            reserva.setSala(cursor.getString(cursor.getColumnIndex("sala_reserva")));
+            reserva.setHorarioInicial(cursor.getString(cursor.getColumnIndex("hora_inicial_reserva")));
+            reserva.setHorarioFinal(cursor.getString(cursor.getColumnIndex("hora_final_reserva")));
 
             reservas.add(reserva);
 
