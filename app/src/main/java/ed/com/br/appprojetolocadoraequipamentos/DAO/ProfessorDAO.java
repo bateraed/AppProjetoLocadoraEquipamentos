@@ -43,9 +43,9 @@ public class ProfessorDAO {
 
         stringBuilderQuery.append("SELECT id, ");
         stringBuilderQuery.append("       nome_prof, ");
-        stringBuilderQuery.append("       email_prof, ");
+/*        stringBuilderQuery.append("       email_prof, ");
         stringBuilderQuery.append("       disciplina_prof, ");
-        stringBuilderQuery.append("       curso_prof, ");
+        stringBuilderQuery.append("       curso_prof, ");*/
         stringBuilderQuery.append("FROM tb_professor ");
         stringBuilderQuery.append("ORDER BY nome_prof");
 

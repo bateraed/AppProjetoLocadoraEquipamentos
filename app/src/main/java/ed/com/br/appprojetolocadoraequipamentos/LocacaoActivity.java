@@ -189,7 +189,7 @@ public class LocacaoActivity extends Activity {
         ProfessorDAO professorDAO = new ProfessorDAO(this);
         List<Professor> professors = professorDAO.selecionarTodos();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,professors);
+        ArrayAdapter<Professor> arrayAdapter = new ArrayAdapter<Professor>(this, android.R.layout.simple_spinner_item,professors);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerProfessor.setAdapter(arrayAdapter);
