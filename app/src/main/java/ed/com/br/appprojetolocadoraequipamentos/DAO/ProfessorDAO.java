@@ -1,24 +1,35 @@
 package ed.com.br.appprojetolocadoraequipamentos.DAO;
 
+import android.content.ContentValues;
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import ed.com.br.appprojetolocadoraequipamentos.Model.Professor;
+import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
+import ed.com.br.appprojetolocadoraequipamentos.Util.DatabaseUtil;
 
 /**
  * Created by edinilson.silva on 19/09/2016.
  */
 public class ProfessorDAO {
 
-    public List<Professor> listarProfessor(){
+    DatabaseUtil databaseUtil;
 
-        Professor p1 = new Professor(1, "Edi", "ba@gmail.com", "Analaise", "ADS");
-        Professor p2 = new Professor(2, "Cesar", "ce@gmail.com", "Redes", "Redes de computadores");
+    public ProfessorDAO(Context context){
+        databaseUtil = new DatabaseUtil(context);
+    }
 
-        List<Professor> professors = new ArrayList<>();
-        professors.add(p1);
-        professors.add(p2);
+    public void  salvar(Professor professor){
 
-        return professors;
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("nome_prof", professor.getNome());
+        contentValues.put("email_prof", professor.getEmail());
+        contentValues.put("disciplina_prof", professor.getDisciplina());
+        contentValues.put("curso_prof",  professor.getCurso());
+
+        databaseUtil.getConexaoDataBase().insert("tb_professor",null, contentValues);
     }
 }

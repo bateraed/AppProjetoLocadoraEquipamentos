@@ -51,8 +51,7 @@ public class Professor {
         this.curso = curso;
     }
 
-    public Professor(Integer id_professor, String nome, String email, String disciplina, String curso) {
-        this.id_professor = id_professor;
+    public Professor(String nome, String email, String disciplina, String curso) {
         this.nome = nome;
         this.email = email;
         this.disciplina = disciplina;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import ed.com.br.appprojetolocadoraequipamentos.MainActivity;
+import ed.com.br.appprojetolocadoraequipamentos.Model.Professor;
 import ed.com.br.appprojetolocadoraequipamentos.R;
 
 /**
@@ -26,5 +27,12 @@ public class SplashScreenActivity extends Activity {
             }
         }, 3000);
 
+    }
+
+
+    private void carregarProfessores(){
+
+        Professor p1 = new Professor(1, "Carlos", "carlos@fate.br", "OO", "Análise de Sistemas");
+        Professor p2 = new Professor(1, "Sergio", "sergio@fate.br", "Java", "Análise de Sistemas");
     }
 }

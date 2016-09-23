@@ -39,16 +39,16 @@ public class DatabaseUtil extends SQLiteOpenHelper {
 
     //CRIANDO TABELA PROFESSORA
     private static final String CRIAR_TABELA_PROFESSOR = "CREATE TABLE " + TB_PROFESSOR + " (" +
-            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NOMEPROFESSOR + " TEXT, " + KEY_EMAIL + " TEXT, "  +
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NOMEPROFESSOR + " TEXT, " + KEY_EMAIL + " TEXT, "  +
             KEY_DISCIPLINA + " TEXT, " + KEY_CURSO + " TEXT" + ")";
 
     //CRIANDO TABLEA EQUIPAMENTO
     private static final String CRIAR_TABElA_EQUIPAMENTO = "CREATE TABLE " + TB_EQUIP + " (" +
-            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NOMEEQUIP + " TEXT, " + KEY_QUANT + " TEXT" + ")";
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NOMEEQUIP + " TEXT, " + KEY_QUANT + " TEXT" + ")";
 
     //CRIANDO TABELA RESERVA
     private static final String CRIAR_TABELA_RESERVA = "CREATE TABLE " + TB_RESERVA + " (" +
-            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NOME_PROF_RESERVA + " INTEGER, " +
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_NOME_PROF_RESERVA + " INTEGER, " +
             KEY_NOME_EQUIP_RESERVA + " INTEGER, " + KEY_SALA + " TEXT, " + KEY_DATA + " DATETIME, " +
             KEY_HORA_INICIAL + " DATETIME, " + KEY_HORA_FINAL + " DATETIME" + ")";
 
