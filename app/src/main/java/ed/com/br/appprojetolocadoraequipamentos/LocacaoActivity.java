@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import ed.com.br.appprojetolocadoraequipamentos.DAO.ProfessorDAO;
 import ed.com.br.appprojetolocadoraequipamentos.DAO.ReservaDAO;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Equipamento;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Professor;
@@ -184,14 +185,11 @@ public class LocacaoActivity extends Activity {
 
     private void listarProfessor() {
 
-        Professor p1 = new Professor(1, "Edi", "ba@gmail.com", "Analaise", "ADS");
-        Professor p2 = new Professor(2, "Cesar", "ce@gmail.com", "Redes", "Redes de computadores");
+        Professor professor = new Professor();
+        ProfessorDAO professorDAO = new ProfessorDAO(this);
+        List<Professor> professors = professorDAO.selecionarTodos();
 
-        List<String> professors = new ArrayList<>();
-        professors.add(p1.getNome());
-        professors.add(p2.getNome());
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, professors);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,professors);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerProfessor.setAdapter(arrayAdapter);

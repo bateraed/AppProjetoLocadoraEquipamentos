@@ -79,7 +79,7 @@ public class ReservaDAO {
         return reserva;
     }
 
-    //Selecionar tadas as pessoas
+    //Selecionar tadas as reservas
     public List<Reserva> selecionarTodos(){
         List<Reserva> reservas = new ArrayList<Reserva>();
 
