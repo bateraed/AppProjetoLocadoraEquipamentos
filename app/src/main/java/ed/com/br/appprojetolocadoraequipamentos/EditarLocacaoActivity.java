@@ -1,10 +1,11 @@
 package ed.com.br.appprojetolocadoraequipamentos;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,17 +18,13 @@ import android.widget.TimePicker;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import ed.com.br.appprojetolocadoraequipamentos.DAO.ReservaDAO;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Equipamento;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
 import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 
-/**
- * Created by edinilson.silva on 14/09/2016.
- */
-public class LocacaoActivity extends Activity {
+public class EditarLocacaoActivity extends AppCompatActivity {
 
     Spinner spinnerSala, spinnerEquipamento;
     EditText editTextData, editTextHoraInicio, editTextHoraFinal, editTextProfessor;
@@ -35,17 +32,17 @@ public class LocacaoActivity extends Activity {
     DatePickerDialog datePickerDialogDataLocacao;
     TimePickerDialog timePickerDialogHorarioInicial, timePickerDialogHorarioFinal;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_locacao);
+        setContentView(R.layout.activity_editar_locacao);
 
         criarComponetes();
-        criarEventos();
-        localizcao();
         carregaSalas();
+        carregarDados();
         listarEquipamentos();
+        criarEventos();
+        eventoAlterar();
     }
 
     private void criarComponetes() {
@@ -130,17 +127,51 @@ public class LocacaoActivity extends Activity {
         concluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eventoSalvar();
+                eventoAlterar();
             }
         });
     }
 
-    private void localizcao() {
-        Locale locale = new Locale("pt", "BR");
-        locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getApplicationContext().getResources().updateConfiguration(config, null);
+    private void eventoAlterar() {
+
+        if(editTextProfessor.getText().toString().trim().equals("")){
+            Util.alert(this, this.getString(R.string.nome_obrigatorio));
+            editTextProfessor.requestFocus();
+        } else if (spinnerEquipamento.getSelectedItem().equals("")){
+            Util.alert(this, this.getString(R.string.equipamento_obrigatorio));
+        } else if (editTextData.getText().toString().trim().equals("")){
+            Util.alert(this, "Data obrigatória!");
+            editTextData.requestFocus();
+        } else if (editTextHoraFinal.getText().toString().trim().equals("")){
+            Util.alert(this, "Horário obrigatório!");
+            editTextHoraFinal.requestFocus();
+        } else if (editTextHoraInicio.getText().toString().trim().equals("")){
+            Util.alert(this, "Horário Obrigatório!");
+            editTextHoraInicio.requestFocus();
+        } else {
+            Reserva reserva = new Reserva();
+            reserva.setNomeProfessor(editTextProfessor.getText().toString());
+            reserva.setEquipamento(spinnerEquipamento.getSelectedItem().toString());
+            reserva.setSala(spinnerSala.getSelectedItem().toString());
+            reserva.setData(editTextData.getText().toString().trim());
+            reserva.setHorarioInicial(editTextHoraInicio.getText().toString().trim());
+            reserva.setHorarioFinal(editTextHoraFinal.getText().toString().trim());
+
+            new ReservaDAO(this).atualizar(reserva);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Locadoção de Equipamentos");
+            builder.setMessage("Registro alterado com sucesso!");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(getApplicationContext(), ConsultaReservaActicity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+            builder.show();
+        }
     }
 
     private void carregaSalas() {
@@ -180,35 +211,18 @@ public class LocacaoActivity extends Activity {
         spinnerEquipamento.setAdapter(arrayAdapter);
     }
 
-    private void eventoSalvar(){
+    protected void carregarDados(){
 
-        Reserva reserva = new Reserva();
+        ReservaDAO reservaDAO = new ReservaDAO(this);
+        Bundle extra = this.getIntent().getExtras();
+        int id_reserva = extra.getInt("id");
+
+        Reserva reserva = reservaDAO.getReserva(id_reserva);
         reserva.setNomeProfessor(editTextProfessor.getText().toString());
         reserva.setEquipamento(spinnerEquipamento.getSelectedItem().toString());
         reserva.setSala(spinnerSala.getSelectedItem().toString());
-        if(editTextData.getText().toString().trim().equals("")){
-            Util.alert(this, "Data obrigatória!");
-            editTextData.requestFocus();
-        } else if (editTextHoraFinal.getText().toString().trim().equals("")){
-            Util.alert(this, "Horário obrigatório!");
-            editTextHoraFinal.requestFocus();
-        } else if (editTextHoraInicio.getText().toString().trim().equals("")){
-            Util.alert(this, "Horário Obrigatório!");
-            editTextHoraInicio.requestFocus();
-        }
         reserva.setData(editTextData.getText().toString().trim());
         reserva.setHorarioInicial(editTextHoraInicio.getText().toString().trim());
         reserva.setHorarioFinal(editTextHoraFinal.getText().toString().trim());
-
-        new ReservaDAO(this).salvar(reserva);
-        Util.alert(this, this.getString(R.string.regsistro_salvo_sucesso) );
-        limparCampos();
-    }
-
-    private void limparCampos(){
-        editTextProfessor.setText(null);
-        editTextData.setText(null);
-        editTextHoraFinal.setText(null);
-        editTextHoraInicio.setText(null);
     }
 }

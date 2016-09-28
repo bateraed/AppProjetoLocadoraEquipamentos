@@ -1,6 +1,7 @@
 package ed.com.br.appprojetolocadoraequipamentos.Util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import ed.com.br.appprojetolocadoraequipamentos.ConsultaReservaActicity;
 import ed.com.br.appprojetolocadoraequipamentos.DAO.ReservaDAO;
+import ed.com.br.appprojetolocadoraequipamentos.EditarLocacaoActivity;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
 import ed.com.br.appprojetolocadoraequipamentos.R;
 
@@ -93,7 +95,11 @@ public class ConsultaAdapterLine extends BaseAdapter {
         buttonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(consultaReservaActicity, EditarLocacaoActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("id", reservas.get(position).getIdLocacao());
+                consultaReservaActicity.startActivity(intent);
+                consultaReservaActicity.finish();
             }
         });
         return viewLinhaLista;

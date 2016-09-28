@@ -1,18 +1,15 @@
 package ed.com.br.appprojetolocadoraequipamentos;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
-    ListView listViewOpcoes;
+    Button bt_reserva;
+    Button bt_lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,51 +17,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         criarComponentes();
-        carregarOpcoesLista();
         criarEventos();
 
     }
 
     private void criarComponentes() {
-        listViewOpcoes = (ListView)findViewById(R.id.listViewOpcoes);
+        bt_reserva = (Button)this.findViewById(R.id.bt_reserva);
+        bt_lista = (Button)this.findViewById(R.id.bt_lista);
     }
 
-    private void carregarOpcoesLista(){
-        String[] itens = new String[3];
-
-        itens[0] = "Reserve um Equipamento";
-        itens[1] = "Todas as Reservas";
-        itens[2] = "Listar Professores";
-
-        ArrayAdapter<String> arrayItens = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itens);
-
-        listViewOpcoes.setAdapter(arrayItens);
-    }
 
     protected  void criarEventos(){
-        listViewOpcoes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        bt_reserva.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String opcaoMenu = ((TextView)view).getText().toString();
-                redirecionaTela(opcaoMenu);
+            public void onClick(View v) {
+                Intent intentReserva = new Intent(getApplicationContext(), LocacaoActivity.class);
+                startActivity(intentReserva);
             }
         });
+
+        bt_lista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentLista = new Intent(getApplicationContext(), ConsultaReservaActicity.class);
+                startActivity(intentLista);
+            }
+        });
+
     }
 
     protected void redirecionaTela(String opcaoMenu){
 
-        Intent intentRedirecionar;
-
-        if(opcaoMenu.equals("Reserve um Equipamento")){
-            intentRedirecionar = new Intent(this, LocacaoActivity.class);
-            startActivity(intentRedirecionar);
-            finish();
-        } else if (opcaoMenu.equals("Todas as Reservas")) {
-            intentRedirecionar = new Intent(this, ConsultaReservaActicity.class);
-            startActivity(intentRedirecionar);
-            finish();
-        } else
-            Toast.makeText(getApplicationContext(), "Opção Inválida!",Toast.LENGTH_SHORT).show();
 
     }
 }

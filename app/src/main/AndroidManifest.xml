@@ -15,9 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LocacaoActivity"/>
-        <activity android:name=".ConsultaReservaActicity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".LocacaoActivity" />
+        <activity android:name=".ConsultaReservaActicity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".EditarLocacaoActivity"></activity>
     </application>
 
 </manifest>
