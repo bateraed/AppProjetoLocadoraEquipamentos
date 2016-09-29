@@ -3,10 +3,12 @@
     <string name="salvar">Salvar</string>
     <string name="voltar">Voltar</string>
     <string name="concluir">Salvar</string>
-    <string name="nome_obrigatorio">O mome é obrigatório!</string>
+    <string name="nome_obrigatorio">O nome do professor é obrigatório!</string>
     <string name="equipamento_obrigatorio">O equipamento é obrigatório!</string>
-    <string name="data_nascimento_obrigatorio">A data é obrigatória!</string>
+    <string name="data_reserva">A data é obrigatória!</string>
     <string name="regsistro_salvo_sucesso">Registro salvo com sucesso!</string>
-    <string name="endereco_obrigatorio">O endereco é obrigatório!</string>
+    <string name="horario_reserva">Horário da reserva é obrigatório!</string>
+    <string name="horario_entrega">Horário de entrega da reserva é obrigatório!</string>
+
 
 </resources>

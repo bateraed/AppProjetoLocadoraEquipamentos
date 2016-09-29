@@ -1,11 +1,11 @@
 package ed.com.br.appprojetolocadoraequipamentos;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,7 +25,7 @@ import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Sala;
 import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 
-public class EditarLocacaoActivity extends AppCompatActivity {
+public class EditarLocacaoActivity extends Activity {
 
     Spinner spinnerSala, spinnerEquipamento;
     EditText editTextData, editTextHoraInicio, editTextHoraFinal, editTextProfessor;
@@ -143,13 +143,13 @@ public class EditarLocacaoActivity extends AppCompatActivity {
         } else if (spinnerEquipamento.getSelectedItem().equals("")){
             Util.alert(this, this.getString(R.string.equipamento_obrigatorio));
         } else if (editTextData.getText().toString().trim().equals("")){
-            Util.alert(this, "Data obrigatória!");
+            Util.alert(this, this.getString(R.string.data_reserva));
             editTextData.requestFocus();
         } else if (editTextHoraFinal.getText().toString().trim().equals("")){
-            Util.alert(this, "Horário obrigatório!");
+            Util.alert(this, this.getString(R.string.horario_reserva));
             editTextHoraFinal.requestFocus();
         } else if (editTextHoraInicio.getText().toString().trim().equals("")){
-            Util.alert(this, "Horário Obrigatório!");
+            Util.alert(this, this.getString(R.string.horario_entrega));
             editTextHoraInicio.requestFocus();
         } else {
             Reserva reserva = new Reserva();
@@ -162,7 +162,7 @@ public class EditarLocacaoActivity extends AppCompatActivity {
 
             new ReservaDAO(this).atualizar(reserva);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Locadoção de Equipamentos");
+            builder.setTitle("Locação de Equipamentos");
             builder.setMessage("Registro alterado com sucesso!");
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override

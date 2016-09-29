@@ -1,11 +1,11 @@
 package ed.com.br.appprojetolocadoraequipamentos;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,7 +28,7 @@ import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 /**
  * Created by edinilson.silva on 14/09/2016.
  */
-public class LocacaoActivity extends AppCompatActivity {
+public class LocacaoActivity extends Activity {
 
     Spinner spinnerSala, spinnerEquipamento;
     EditText editTextData, editTextHoraInicio, editTextHoraFinal, editTextProfessor;
@@ -191,26 +191,33 @@ public class LocacaoActivity extends AppCompatActivity {
     private void eventoSalvar(){
 
         Reserva reserva = new Reserva();
-        reserva.setNomeProfessor(editTextProfessor.getText().toString());
-        reserva.setEquipamento(spinnerEquipamento.getSelectedItem().toString());
-        reserva.setSala(spinnerSala.getSelectedItem().toString());
-        if(editTextData.getText().toString().trim().equals("")){
-            Util.alert(this, "Data obrigatória!");
+
+        if(editTextProfessor.getText().toString().trim().equals("")){
+            Util.alert(this, this.getString(R.string.nome_obrigatorio));
+            editTextProfessor.requestFocus();
+        } else if (spinnerEquipamento.getSelectedItem().equals("")){
+            Util.alert(this, this.getString(R.string.equipamento_obrigatorio));
+        } else if (editTextData.getText().toString().trim().equals("")){
+            Util.alert(this, this.getString(R.string.data_reserva));
             editTextData.requestFocus();
         } else if (editTextHoraFinal.getText().toString().trim().equals("")){
-            Util.alert(this, "Horário obrigatório!");
+            Util.alert(this, this.getString(R.string.horario_reserva));
             editTextHoraFinal.requestFocus();
         } else if (editTextHoraInicio.getText().toString().trim().equals("")){
-            Util.alert(this, "Horário Obrigatório!");
+            Util.alert(this, this.getString(R.string.horario_entrega));
             editTextHoraInicio.requestFocus();
-        }
-        reserva.setData(editTextData.getText().toString().trim());
-        reserva.setHorarioInicial(editTextHoraInicio.getText().toString().trim());
-        reserva.setHorarioFinal(editTextHoraFinal.getText().toString().trim());
+        } else {
+            reserva.setNomeProfessor(editTextProfessor.getText().toString());
+            reserva.setEquipamento(spinnerEquipamento.getSelectedItem().toString());
+            reserva.setSala(spinnerSala.getSelectedItem().toString());
+            reserva.setData(editTextData.getText().toString().trim());
+            reserva.setHorarioInicial(editTextHoraInicio.getText().toString().trim());
+            reserva.setHorarioFinal(editTextHoraFinal.getText().toString().trim());
 
-        new ReservaDAO(this).salvar(reserva);
-        Util.alert(this, this.getString(R.string.regsistro_salvo_sucesso) );
-        limparCampos();
+            new ReservaDAO(this).salvar(reserva);
+            Util.alert(this, this.getString(R.string.regsistro_salvo_sucesso));
+            limparCampos();
+        }
     }
 
     private void limparCampos(){
