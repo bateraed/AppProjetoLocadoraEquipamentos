@@ -19,7 +19,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="#96ffffff"
+        android:background="#cbffffff"
         android:id="@+id/relativeLayout">
 
         <ImageView
@@ -51,6 +51,6 @@
         android:id="@+id/listViewReservas"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="#96ffffff"
+        android:background="#cbffffff"
         android:layout_below="@+id/relativeLayout" />
 </RelativeLayout>
