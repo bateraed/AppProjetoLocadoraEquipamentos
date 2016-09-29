@@ -1,11 +1,11 @@
 package ed.com.br.appprojetolocadoraequipamentos;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,7 +28,7 @@ import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 /**
  * Created by edinilson.silva on 14/09/2016.
  */
-public class LocacaoActivity extends Activity {
+public class LocacaoActivity extends AppCompatActivity {
 
     Spinner spinnerSala, spinnerEquipamento;
     EditText editTextData, editTextHoraInicio, editTextHoraFinal, editTextProfessor;
