@@ -22,6 +22,7 @@ import java.util.Locale;
 import ed.com.br.appprojetolocadoraequipamentos.DAO.ReservaDAO;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Equipamento;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
+import ed.com.br.appprojetolocadoraequipamentos.Model.Sala;
 import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 
 /**
@@ -34,7 +35,6 @@ public class LocacaoActivity extends Activity {
     Button voltar, concluir;
     DatePickerDialog datePickerDialogDataLocacao;
     TimePickerDialog timePickerDialogHorarioInicial, timePickerDialogHorarioFinal;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,39 +145,47 @@ public class LocacaoActivity extends Activity {
 
     private void carregaSalas() {
 
-        ArrayAdapter<String> arrayAdapter;
+        ArrayAdapter<String> arrayAdapterSalas;
 
-        List<String> itens = new ArrayList<>();
+        Sala s1 = new Sala("A 01");
+        Sala s2 = new Sala("A 02");
+        Sala s3 = new Sala("B 01");
+        Sala s4 = new Sala("B 02");
 
-        itens.add("A01");
-        itens.add("A02");
-        itens.add("A03");
-        itens.add("B01");
-        itens.add("B02");
-        itens.add("B03");
-        itens.add("C01");
-        itens.add("C02");
-        itens.add("C03");
+        List<String> salas = new ArrayList<>();
+        salas.add(s1.getNome());
+        salas.add(s2.getNome());
+        salas.add(s3.getNome());
+        salas.add(s4.getNome());
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itens);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinnerSala.setAdapter(arrayAdapter);
+        arrayAdapterSalas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, salas);
+        arrayAdapterSalas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerSala.setAdapter(arrayAdapterSalas);
     }
 
     private void listarEquipamentos() {
 
-        Equipamento e1 = new Equipamento(1, "DataShow", 5);
-        Equipamento e2 = new Equipamento(2, "Lousa", 2);
+        ArrayAdapter<String> arrayAdapterEquipamentos;
 
-        List<String> equipamentos = new ArrayList<>();
+        Equipamento e1 = new Equipamento("DataShow Epson Powerlite X24+");
+        Equipamento e2 = new Equipamento("DataShow Epson Powerlite S18+");
+        Equipamento e3 = new Equipamento("DataShow PHILIPS PPX2480");
+        Equipamento e4 = new Equipamento("DataShow SONY VPLDX140");
+        Equipamento e5 = new Equipamento("Lousa Digital");
+
+        List<String> equipamentos = new ArrayList<String>();
         equipamentos.add(e1.getNome());
         equipamentos.add(e2.getNome());
+        equipamentos.add(e3.getNome());
+        equipamentos.add(e4.getNome());
+        equipamentos.add(e5.getNome());
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, equipamentos);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        arrayAdapterEquipamentos = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, equipamentos);
+        arrayAdapterEquipamentos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinnerEquipamento.setAdapter(arrayAdapter);
+        spinnerEquipamento.setAdapter(arrayAdapterEquipamentos);
     }
 
     private void eventoSalvar(){
@@ -211,4 +219,5 @@ public class LocacaoActivity extends Activity {
         editTextHoraFinal.setText(null);
         editTextHoraInicio.setText(null);
     }
+
 }

@@ -22,6 +22,7 @@ import java.util.List;
 import ed.com.br.appprojetolocadoraequipamentos.DAO.ReservaDAO;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Equipamento;
 import ed.com.br.appprojetolocadoraequipamentos.Model.Reserva;
+import ed.com.br.appprojetolocadoraequipamentos.Model.Sala;
 import ed.com.br.appprojetolocadoraequipamentos.Util.Util;
 
 public class EditarLocacaoActivity extends AppCompatActivity {
@@ -32,17 +33,19 @@ public class EditarLocacaoActivity extends AppCompatActivity {
     DatePickerDialog datePickerDialogDataLocacao;
     TimePickerDialog timePickerDialogHorarioInicial, timePickerDialogHorarioFinal;
 
+    ArrayAdapter<String> arrayAdapterSalas, arrayAdapterEquipamentos;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_locacao);
 
         criarComponetes();
-        carregaSalas();
-        carregarDados();
-        listarEquipamentos();
         criarEventos();
-        eventoAlterar();
+        carregaSalas();
+        listarEquipamentos();
+        carregarDados();
     }
 
     private void criarComponetes() {
@@ -176,39 +179,60 @@ public class EditarLocacaoActivity extends AppCompatActivity {
 
     private void carregaSalas() {
 
-        ArrayAdapter<String> arrayAdapter;
+        Sala s1 = new Sala("A 01");
+        Sala s2 = new Sala("A 02");
+        Sala s3 = new Sala("B 01");
+        Sala s4 = new Sala("B 02");
 
-        List<String> itens = new ArrayList<>();
+        List<String> salas = new ArrayList<>();
+        salas.add(s1.getNome());
+        salas.add(s2.getNome());
+        salas.add(s3.getNome());
+        salas.add(s4.getNome());
 
-        itens.add("A01");
-        itens.add("A02");
-        itens.add("A03");
-        itens.add("B01");
-        itens.add("B02");
-        itens.add("B03");
-        itens.add("C01");
-        itens.add("C02");
-        itens.add("C03");
+        arrayAdapterSalas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, salas);
+        arrayAdapterSalas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itens);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerSala.setAdapter(arrayAdapter);
+        spinnerSala.setAdapter(arrayAdapterSalas);
     }
 
     private void listarEquipamentos() {
 
-        Equipamento e1 = new Equipamento(1, "DataShow", 5);
-        Equipamento e2 = new Equipamento(2, "Lousa", 2);
+        Equipamento e1 = new Equipamento("DataShow Epson Powerlite X24+");
+        Equipamento e2 = new Equipamento("DataShow Epson Powerlite S18+");
+        Equipamento e3 = new Equipamento("DataShow PHILIPS PPX2480");
+        Equipamento e4 = new Equipamento("DataShow SONY VPLDX140");
+        Equipamento e5 = new Equipamento("Lousa Digital");
 
-        List<String> equipamentos = new ArrayList<>();
+        List<String> equipamentos = new ArrayList<String>();
         equipamentos.add(e1.getNome());
         equipamentos.add(e2.getNome());
+        equipamentos.add(e3.getNome());
+        equipamentos.add(e4.getNome());
+        equipamentos.add(e5.getNome());
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, equipamentos);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        arrayAdapterEquipamentos = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, equipamentos);
+        arrayAdapterEquipamentos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinnerEquipamento.setAdapter(arrayAdapter);
+        spinnerEquipamento.setAdapter(arrayAdapterEquipamentos);
+    }
+
+    private void carrgarSalaBanco(String idSala){
+        for (int i = 0; i < arrayAdapterSalas.getCount(); i++){
+            if((arrayAdapterSalas.getItem(i)).equals(idSala)){
+                spinnerSala.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void carregarEquipamentoBanco(String idEquipamento){
+        for (int i = 0; i < arrayAdapterEquipamentos.getCount(); i++){
+            if((arrayAdapterEquipamentos.getItem(i)).equals(idEquipamento)){
+                spinnerSala.setSelection(i);
+                break;
+            }
+        }
     }
 
     protected void carregarDados(){
@@ -218,11 +242,15 @@ public class EditarLocacaoActivity extends AppCompatActivity {
         int id_reserva = extra.getInt("id");
 
         Reserva reserva = reservaDAO.getReserva(id_reserva);
-        reserva.setNomeProfessor(editTextProfessor.getText().toString());
-        reserva.setEquipamento(spinnerEquipamento.getSelectedItem().toString());
-        reserva.setSala(spinnerSala.getSelectedItem().toString());
-        reserva.setData(editTextData.getText().toString().trim());
-        reserva.setHorarioInicial(editTextHoraInicio.getText().toString().trim());
-        reserva.setHorarioFinal(editTextHoraFinal.getText().toString().trim());
+
+        editTextProfessor.setText(reserva.getNomeProfessor());
+        this.carregarEquipamentoBanco(reserva.getEquipamento());
+        this.carrgarSalaBanco(reserva.getSala());
+        editTextData.setText(reserva.getData());
+        editTextHoraInicio.setText(reserva.getHorarioInicial());
+        editTextHoraFinal.setText(reserva.getHorarioFinal());
     }
+
+
+
 }
